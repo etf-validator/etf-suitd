@@ -49,7 +49,7 @@ repositories {
         > Could not download etf-sui-plugin-plugin.jar (de.interactive_instruments.etf.suim:etf-sui-plugin:2.0.1-SNAPSHOT): No cached version available for offline mode
     */
 
-	// mavenLocal()
+    // mavenLocal()
 }
 
 ext.aeVersion = '2.2.0'
@@ -79,6 +79,13 @@ dependencies {
     compile 'xmlbeans:xbean:fixed-2.4.0'
     compile 'commons-cli:commons-cli:1.2'
     compile 'commons-ssl:not-yet-commons-ssl:0.3.11'
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.71'
+    compile('org.apache.flex.blazeds:flex-messaging-core:4.7.3') {
+        exclude group: 'xalan'
+    }
+    compile group: 'com.btr', name: 'proxy-vole', version: '20131209'
+    compile group: 'wsdl4j', name: 'wsdl4j', version: '1.6.3'
+    compile group: 'org.xmlunit', name: 'xmlunit-legacy', version: '2.9.0'
 
     // SOAPUI END
 
@@ -96,7 +103,7 @@ dependencies {
 
     // Get libs for SoapUI: workaround for defect SoapUI POM in the SoapUI repository...
     compile group: 'org.slf4j', name: 'log4j-over-slf4j', version: etf_slf4jApiVersion
-	compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+    compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
 
     integrationTest group: 'ch.qos.logback', name: 'logback-classic', version: etf_logbackVersion
     integrationTest group: 'org.junit.jupiter', name: 'junit-jupiter', version: etf_junitTestVersion
@@ -104,13 +111,15 @@ dependencies {
     integrationTest group: 'de.interactive_instruments.etf.test', name: 'etf-sui-integration-test-resources', version: '1.0.1'+project.snapshotSuffix
     integrationTest group: 'de.interactive_instruments.etf', name: 'etf-stdtot', version: '2.1.0' + project.snapshotSuffix
     integrationTest group: 'de.interactive_instruments.etf.test', name: 'etf-unittest', version: '2.1.0' + project.snapshotSuffix
+
+    integrationTest "org.codehaus.groovy:groovy-all:2.5.4"
 }
 
 configurations {
-	// jms is pulled in via several soapui dependencies but gradle denies to fetch
-	// it. So just block it.
-	all*.exclude group: 'javax.jms', module: 'jms'
-	all*.exclude group: 'com.jgoodies', module: 'forms'
+    // jms is pulled in via several soapui dependencies but gradle denies to fetch
+    // it. So just block it.
+    all*.exclude group: 'javax.jms', module: 'jms'
+    all*.exclude group: 'com.jgoodies', module: 'forms'
 
     compile.extendsFrom api
     testCompile.extendsFrom integrationTest
